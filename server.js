@@ -7,8 +7,9 @@ var exphs = require('express-handlebars');
 var request = require('request');
 var cheerio = require('cheerio');
 
-
-/*NEED TO REQUIRE MODELS HERE*/
+// Require Models
+var Article = require('./models/Article.js');
+var Note = require('./models/Note.js');
 
 // Express
 var app = express();
