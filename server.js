@@ -94,29 +94,6 @@ app.get("/scrape", function(req, res) {
   res.send("Scrape Complete");
 });
 
-app.get('/scrape', function(req, res) {
-	request('https://www.reddit.com/r/nba/', function(req, res) {
-		var $ = cheerio.load(html);
-		$("p .title").each(function(i, element) {
-			var result = {};
-			result.title = $(this).children('a').text();
-			result.link = $(this).children('a').attr('href');
-
-			var entry = new Article(result);
-
-			entry.save(function(err, doc) {
-				if (err) {
-					console.log(err);
-				}
-				else {
-					console.log(doc);
-				}
-			});
-		});
-	});
-	res.send("Scrape complete");
-});
-
 // This will get the articles we scraped from the mongoDB
 app.get("/articles", function(req, res) {
   // Grab every doc in the Articles array
