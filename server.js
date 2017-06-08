@@ -48,3 +48,7 @@ db.once('open', function() {
 	console.log('Connected to Mongoose');
 });
 
+// Start Express
+app.listen(port, function(err) {
+  console.log('Listening on port ' + port);
+});
