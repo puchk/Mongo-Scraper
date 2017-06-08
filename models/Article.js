@@ -13,6 +13,10 @@ var ArticleSchema = new Schema({
 		type: String,
 		required: true
 	},
+	saved: {
+		type: Boolean,
+		default: false
+	},
 	note: {
 		// Only saves note's ObjectId
 		type: Schema.Types.ObjectId,

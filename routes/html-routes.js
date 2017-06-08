@@ -1,4 +1,4 @@
-/*var express = require('express');
+var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
 var request = require("request");
@@ -11,54 +11,25 @@ mongoose.Promise = Promise;
 var Article = require('../models/Article.js');
 var Note = require('../models/Note.js');
 
-// var index = require('../views/index.handlebars');
-
-// var home = {
-// 	title: 'Kevin Puchalski Portfolio'
-// };
-
-// Home
+var index = require('../views/index.handlebars');
 router.get('/', function(req, res) {
-	// res.render('index', home );
 	res.render('index');
 });
 
-// router.get('/scrape', function(req, res) {
-// 	request('https://www.reddit.com/r/nba/', function(req, res) {
-// 		var $ = cheerio.load(html);
-// 		$("p .title").each(function(i, element) {
-// 			var result = {};
-// 			result.title = $(this).children('a').text();
-// 			result.link = $(this).children('a').attr('href');
-
-// 			var entry = new Article(result);
-
-// 			entry.save(function(err, doc) {
-// 				if (err) {
-// 					console.log(err);
-// 				}
-// 				else {
-// 					console.log(doc);
-// 				}
-// 			});
-// 		});
-// 	});
-// 	res.send("Scrape complete");
-// });
 router.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  request("http://www.echojs.com/", function(error, response, html) {
+  request("http://www.fangraphs.com/blogs/", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
+    $(".post h2 a").each(function(i, element) {
 
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this).children("a").text();
-      result.link = $(this).children("a").attr("href");
+      result.title = $(this).text();
+      result.link = $(this).attr("href");
 
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
@@ -82,15 +53,19 @@ router.get("/scrape", function(req, res) {
   res.send("Scrape Complete");
 });
 
-router.get('/articles', function(req, res) {
-	Article.find({}, function(error, doc) {
-		if (error) {
-			console.log(error);
-		}
-		else {
-			res.json(doc);
-		}
-	});
+// This will get the articles we scraped from the mongoDB
+router.get("/articles", function(req, res) {
+  // Grab every doc in the Articles array
+  Article.find({}, function(error, doc) {
+    // Log any errors
+    if (error) {
+      console.log(error);
+    }
+    // Or send the doc to the browser as a json object
+    else {
+      res.json(doc);
+    }
+  });
 });
 
 // Grab an article by it's ObjectId
@@ -144,4 +119,3 @@ router.post("/articles/:id", function(req, res) {
 });
 
 module.exports = router;
-*/
