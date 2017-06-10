@@ -18,18 +18,22 @@ router.get('/', function(req, res) {
 
 router.get("/scrape", function(req, res) {
   // First, we grab the body of the html with request
-  request("http://www.fangraphs.com/blogs/", function(error, response, html) {
+  request("https://huckberry.com/journal?category=featured", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
-    $(".post h2 a").each(function(i, element) {
+    $(".post").each(function(i, element) {
 
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this).text();
-      result.link = $(this).attr("href");
+      result.title = $(this).children("h2").children("a").text();
+      result.link = $(this).children("a").attr("href");
+      result.image = $(this).children("a").children("img").attr("src");
+
+      console.log(result);
+
 
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
