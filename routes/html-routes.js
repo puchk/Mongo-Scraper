@@ -13,7 +13,20 @@ var Note = require('../models/Note.js');
 
 var index = require('../views/index.handlebars');
 router.get('/', function(req, res) {
-	res.render('index');
+  // Grab every doc in the Articles array
+  Article.find({}, function(error, doc) {
+    // Log any errors
+    if (error) {
+      console.log(error);
+    }
+    // Or send the doc to the browser as a json object
+    else {
+    	res.locals.article = doc;
+      res.render('index');
+    }
+  });
+
+	// res.render('index');
 });
 
 router.get("/scrape", function(req, res) {
