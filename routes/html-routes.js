@@ -6,12 +6,17 @@ var cheerio = require("cheerio");
 
 mongoose.Promise = Promise;
 
-
 // Require Models
 var Article = require('../models/Article.js');
 var Note = require('../models/Note.js');
 
 var index = require('../views/index.handlebars');
+
+var home = {
+  addCSS: "<link rel='stylesheet' href='/assets/css/home.css'>"
+}
+
+
 router.get('/', function(req, res) {
   // Grab every doc in the Articles array
   Article.find({}, function(error, doc) {
@@ -19,10 +24,9 @@ router.get('/', function(req, res) {
     if (error) {
       console.log(error);
     }
-    // Or send the doc to the browser as a json object
     else {
     	res.locals.article = doc;
-      res.render('index');
+      res.render('index', home);
     }
   });
 

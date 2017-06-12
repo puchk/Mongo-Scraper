@@ -1,5 +1,16 @@
 	{{#each article}}
-		<h3>{{title}}</h3>
-		<p>{{link}}</p>
-		<p>{{image}}</p>
+	<div class="row articleContainer">
+		<div class="col-xs-3">
+			<img src="{{image}}" class="articleImage"></img>
+		</div>
+		<div class="col-xs-7">
+			<h3><a href="https://huckberry.com{{link}}" target="_blank">{{title}}</a></h1>
+			{{!-- <p>{{link}}</p> --}}
+			<button data-id={{_id}}>Save Article</button>
+
+		</div>
+		<div class="col-xs-2">
+		</div>
+	</div>
+
 	{{/each}}

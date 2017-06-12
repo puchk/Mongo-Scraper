@@ -1,0 +1,8 @@
+.articleContainer {
+	border: 1px solid black;
+	margin: 0 0 5px;
+}
+
+.articleImage {
+	max-width: 100%
+}
